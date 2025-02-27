@@ -41,6 +41,8 @@ npm i helmet
 ```
 
 import helmet from "helmet";
-app.use(express.json({limit: '10kb'})); // add this limit to the response. more than 10kb will be truncate
+app.use(express.json({limit: '10kb'}));
+ // add this limit to the response.
+// more than 10kb will be truncated
 
 ```
