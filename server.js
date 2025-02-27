@@ -2,9 +2,10 @@ import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import pool from "./db.js"; // Relative path, since both are in the same directory
 import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '10kb'}));
 
 const port = 3000;
 let limiter = rateLimit({
@@ -14,6 +15,7 @@ let limiter = rateLimit({
 })
 
 app.use('/books', limiter);
+app.use(helmet());
 
 // GET /books -> return all books
 app.get("/books", async (req, res) => {
