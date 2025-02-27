@@ -1,11 +1,19 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import pool from "./db.js"; // Relative path, since both are in the same directory
+import rateLimit from "express-rate-limit";
 
 const app = express();
 app.use(express.json());
 
 const port = 3000;
+let limiter = rateLimit({
+  max:3,
+  windowMs: 60*60*1000,
+  message: "we have received too many requests from this API. Please try again after one hour"
+})
+
+app.use('/books', limiter);
 
 // GET /books -> return all books
 app.get("/books", async (req, res) => {
