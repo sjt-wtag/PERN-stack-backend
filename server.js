@@ -3,13 +3,14 @@ import { v4 as uuidv4 } from "uuid";
 import pool from "./db.js"; // Relative path, since both are in the same directory
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import { configDotenv } from "dotenv";
 
 const app = express();
 app.use(express.json({limit: '10kb'}));
 
-const port = 3000;
+const port = process.env.PORT
 let limiter = rateLimit({
-  max:3,
+  max:300,
   windowMs: 60*60*1000,
   message: "we have received too many requests from this API. Please try again after one hour"
 })

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment: 
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sql
+      - POSTGRES_DB=bookdb
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sql
+      POSTGRES_DB: bookdb
+    ports:
+      - "5432:5433" 
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
